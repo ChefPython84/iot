@@ -1,7 +1,7 @@
 // script pour controler la prise plug s
 
 
-const IpAdressData = 'https://shelly-86-eu.shelly.cloud/device/status?id=80646F827174&auth_key=MWRmYzM2dWlkE62C6C4C76F817CE0A3D2902F5B5D4C115E49B28CF8539114D9246505DE5D368D560D06020A92480' ; // adresse ip de la prise plug s
+const IpAdressData = 'https://shelly-77-eu.shelly.cloud/device/status?id=4022d88e30e8&auth_key=MWNiMjY5dWlk404459961993DCA83AE44BC6E3A6F58906952E7BECA0A5B69DC375C964915ACBC0EA536A0639CB73' ; // adresse ip de la prise plug s
 
 // recuperer les infos de la prise plug s
 function getPlugS() {
@@ -24,12 +24,6 @@ function getPlugS() {
         })
 }
 
-const ipAdressToggle: 'https://shelly-86-eu.shelly.cloud/device/relay/bulk_control?id=80646F827174&auth_key=MWRmYzM2dWlkE62C6C4C76F817CE0A3D2902F5B5D4C115E49B28CF8539114D9246505DE5D368D560D06020A92480'
-
-function togglePower() {
-    fetch (ipAdressToggle)
-        .then((response) => {
-}
 
 
 
