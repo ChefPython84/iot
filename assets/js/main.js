@@ -1,7 +1,7 @@
-// script pour controler la prise plug s
 
 
-const IpAdressData = 'https://shelly-86-eu.shelly.cloud/device/status?id=80646F827174&auth_key=MWRmYzM2dWlkE62C6C4C76F817CE0A3D2902F5B5D4C115E49B28CF8539114D9246505DE5D368D560D06020A92480' ; // adresse ip de la prise plug s
+const IpAdressData = 'https://shelly-77-eu.shelly.cloud/device/status?id=4022d88e30e8&auth_key=MWNiMjY5dWlk404459961993DCA83AE44BC6E3A6F58906952E7BECA0A5B69DC375C964915ACBC0EA536A0639CB73' ; // adresse ip de la prise plug s
+const IpAdressRelay = 'https://shelly-77-eu.shelly.cloud/device/relay/control?id=4022d88e30e8&auth_key=MWNiMjY5dWlk404459961993DCA83AE44BC6E3A6F58906952E7BECA0A5B69DC375C964915ACBC0EA536A0639CB73'
 
 // recuperer les infos de la prise plug s
 function getPlugS() {
@@ -18,24 +18,59 @@ function getPlugS() {
             document.getElementById('temperature').textContent = data.data.device_status.temperature;
             document.getElementById('serial').textContent = data.data.device_status.serial;
             document.getElementById('mac').textContent = data.data.device_status.mac;
+            document.getElementById('power_meter').textContent = data.data.device_status.meters[0].power;
+            document.getElementById('time').textContent = data.data.device_status.time;
         })
         .catch((err) => {
             console.log(err);
         })
 }
 
-const ipAdressToggle: 'https://shelly-86-eu.shelly.cloud/device/relay/bulk_control?id=80646F827174&auth_key=MWRmYzM2dWlkE62C6C4C76F817CE0A3D2902F5B5D4C115E49B28CF8539114D9246505DE5D368D560D06020A92480'
+// allumer et éteinre la prise plug s
 
-function togglePower() {
-    fetch (ipAdressToggle)
+function turnOn() {
+    fetch(IpAdressRelay,{
+        method: 'POST',
+        body: JSON.stringify({
+            'Turn': 'on'
+        })
+    })
         .then((response) => {
+        return response.json();
+    })
+        .then((data) => {
+        console.log(data);
+        document.getElementById('turn').textContent = data.data.relays[0].ison;
+        }).catch((err) => {
+        console.log(err);
+        })
 }
 
-
+function turnOff() {
+    fetch(IpAdressRelay,{
+        method: 'POST',
+        body: JSON.stringify({
+            'Turn': 'off'
+        })
+    })
+        .then((response) => {
+        return response.json();
+    })
+        .then((data) => {
+        console.log(data);
+        document.getElementById('turn').textContent = data.data.relays[0].ison;
+        }).catch((err) => {
+        console.log(err);
+        })
+}
 
 
 
 document.addEventListener('DOMContentLoaded', function () {
     getPlugS();
-    setInterval(getPlugS, 1000);
+    document.getElementById('turnOn').addEventListener('click', turnOn);
+    document.getElementById('turnOff').addEventListener('click', turnOff);
+    setInterval(getPlugS,
+        turnOff(),turnOn(),
+        1000);
 });
