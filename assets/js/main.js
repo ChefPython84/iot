@@ -18,6 +18,8 @@ function getPlugS() {
             document.getElementById('temperature').textContent = data.data.device_status.temperature;
             document.getElementById('serial').textContent = data.data.device_status.serial;
             document.getElementById('mac').textContent = data.data.device_status.mac;
+            document.getElementById('power_meter').textContent = data.data.device_status.meters[0].power;
+            document.getElementById('time').textContent = data.data.device_status.time;
         })
         .catch((err) => {
             console.log(err);
